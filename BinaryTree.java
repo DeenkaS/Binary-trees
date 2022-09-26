@@ -33,14 +33,14 @@ public class BinaryTree {
             return;
         } else {
             while (true) {
-                if (next.key < key) {
+                if (next.key > key) {
                     if (next.left == null) {
                         next.left = new Node(key, value);
                         return;
                     }
                     next = next.left;
                 }
-                if (next.key > key) {
+                if (next.key < key) {
                     if (next.right == null) {
                         next.right = new Node(key, value);
                         return;
@@ -62,13 +62,13 @@ public class BinaryTree {
             return null;
         } else {
             while (true) {
-                if (next.key < key) {
+                if (next.key > key) {
                     if (next.left == null) {
                         return null;
                     }
                     next = next.left;
                 }
-                if (next.key > key) {
+                if (next.key < key) {
                     if (next.right == null) {
                         return null;
                     }
