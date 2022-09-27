@@ -22,6 +22,7 @@ public class BinaryTree implements Iterable<Integer> {
         }
 
     }
+
     public Iterator<Integer> iterator() {
         return new TreeIterator();
     }
@@ -57,24 +58,8 @@ public class BinaryTree implements Iterable<Integer> {
         @Override
         public Integer next() {
             Integer returnvalue = next.value;
+            // System.out.println("Peek: " + this.stack.peek().left.value);
 
-            if (hasNext() == true) {
-                if ((this.stack.peek().left == next || next == root) && next.right != null) {
-                    next = next.right;
-                    while (next.left != null) {
-                        this.stack.push(next);
-                        next = next.left;
-                    }
-                    return returnvalue;
-                }
-                if (stack.peek().left == next && next.right == null) {
-                    this.next = this.stack.pop();
-                    return returnvalue;
-                }
-            } else {
-                this.next = this.stack.pop();
-                return returnvalue;
-            }
             return returnvalue;
         }
 
