@@ -1,4 +1,7 @@
-public class BinaryTree {
+import java.util.Iterator;
+import java.util.Stack;
+
+public class BinaryTree implements Iterable<Integer> {
     public class Node {
         public Integer key;
         public Integer value;
@@ -17,12 +20,68 @@ public class BinaryTree {
             if (right != null)
                 right.print();
         }
+
+    }
+    public Iterator<Integer> iterator() {
+        return new TreeIterator();
     }
 
     Node root;
 
     public BinaryTree() {
         root = null;
+    }
+
+    public class TreeIterator implements Iterator<Integer> {
+        private Node next;
+        private Stack<Node> stack;
+
+        public TreeIterator() {
+            stack = new Stack<Node>();
+            next = root;
+            while (next.left != null) {
+                stack.push(next);
+                next = next.left;
+
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (next == null) {
+                return false;
+            } else
+                return true;
+        }
+
+        @Override
+        public Integer next() {
+            Integer returnvalue = next.value;
+
+            if (hasNext() == true) {
+                if ((this.stack.peek().left == next || next == root) && next.right != null) {
+                    next = next.right;
+                    while (next.left != null) {
+                        this.stack.push(next);
+                        next = next.left;
+                    }
+                    return returnvalue;
+                }
+                if (stack.peek().left == next && next.right == null) {
+                    this.next = this.stack.pop();
+                    return returnvalue;
+                }
+            } else {
+                this.next = this.stack.pop();
+                return returnvalue;
+            }
+            return returnvalue;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     void add(Integer key, Integer value) {
@@ -80,4 +139,5 @@ public class BinaryTree {
             }
         }
     }
+
 }
