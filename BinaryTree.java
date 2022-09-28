@@ -1,3 +1,4 @@
+import java.util.EmptyStackException;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -39,6 +40,7 @@ public class BinaryTree implements Iterable<Integer> {
 
         public TreeIterator() {
             stack = new Stack<Node>();
+            stack.push(root);
             next = root;
             while (next.left != null) {
                 stack.push(next);
@@ -49,16 +51,30 @@ public class BinaryTree implements Iterable<Integer> {
 
         @Override
         public boolean hasNext() {
-            if (next == null) {
+            if (stack.empty()) {
                 return false;
-            } else
-                return true;
+            }
+            return true;
         }
 
         @Override
         public Integer next() {
-            Integer returnvalue = next.value;
-            // System.out.println("Peek: " + this.stack.peek().left.value);
+            Integer returnvalue = next.value; // save current node vlue
+            int beenLeft = 0;
+            // are we done yet?
+            if (!hasNext()) {
+                throw new EmptyStackException();
+            }
+            
+            if(next.right != null){
+                stack.push(next.right);
+            }
+
+            if(next.left != null){
+                stack.push(next.left);
+            }
+
+            next = stack.pop();
 
             return returnvalue;
         }
