@@ -40,7 +40,6 @@ public class BinaryTree implements Iterable<Integer> {
 
         public TreeIterator() {
             stack = new Stack<Node>();
-            stack.push(root);
             next = root;
             while (next.left != null) {
                 stack.push(next);
@@ -60,22 +59,28 @@ public class BinaryTree implements Iterable<Integer> {
         @Override
         public Integer next() {
             Integer returnvalue = next.value; // save current node vlue
-            int beenLeft = 0;
+
             // are we done yet?
+
+            if (next.right != null) { // do we have something to the right?
+                stack.push(next.right); // save the thing to the right
+                next = next.right; // step right
+
+                if (next.left != null) { // do we have something to the left?
+                    stack.push(next); // push left to stack
+                    while (next.left != null) {
+                        stack.push(next);
+                        next = next.left;
+                    }
+                }
+
+            }
+
             if (!hasNext()) {
                 throw new EmptyStackException();
             }
-            
-            if(next.right != null){
-                stack.push(next.right);
-            }
-
-            if(next.left != null){
-                stack.push(next.left);
-            }
 
             next = stack.pop();
-
             return returnvalue;
         }
 

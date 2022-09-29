@@ -10,8 +10,7 @@ public class TreeTest {
         // for (int i = 0; i < n; i++) {
         //     testTree.add(rnd.nextInt(rndseed), rnd.nextInt(rndseed));
         // }
-        // testTree.root.print();
-
+        
         // System.out.println(testTree.lookup(50));
         
         BinaryTree tree = new BinaryTree();
@@ -22,9 +21,11 @@ public class TreeTest {
         tree.add(8, 108);
         tree.add(6, 106);
         tree.add(3, 103);
+        
+        
         for (int i : tree)
             System.out.println("next value " + i);
-
+            
     }
 
 }
